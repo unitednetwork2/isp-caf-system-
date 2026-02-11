@@ -221,11 +221,27 @@ function sendOTP() {
     // Determine the OTP
     generatedOTP = Math.floor(1000 + Math.random() * 9000);
 
-    // Simulate sending SMS
+    // Simulate sending SMS (Keep alert for desktop)
     alert(`OTP sent to ${mobile}: ${generatedOTP}`);
 
     // Show Modal
-    document.getElementById('otp-modal').classList.remove('hidden');
+    const modal = document.getElementById('otp-modal');
+    modal.classList.remove('hidden');
+
+    // For Demo/Testing: Show OTP inside the modal
+    let demoMsg = document.getElementById('demo-otp-msg');
+    if (!demoMsg) {
+        demoMsg = document.createElement('p');
+        demoMsg.id = 'demo-otp-msg';
+        demoMsg.style.color = '#10b981'; // Success color
+        demoMsg.style.fontWeight = 'bold';
+        demoMsg.style.marginTop = '-10px';
+        demoMsg.style.marginBottom = '10px';
+        // Insert before the input field
+        const inputField = document.getElementById('otp-input');
+        inputField.parentNode.insertBefore(demoMsg, inputField);
+    }
+    demoMsg.textContent = `(Demo OTP Code: ${generatedOTP})`;
 }
 
 function closeModal() {
@@ -507,8 +523,19 @@ document.getElementById('caf-form').addEventListener('submit', async function (e
             pdf.text("Subscriber Signature", margin, pdfHeight - 3);
         }
 
-        pdf.save(`CAF_${formData.customerId}.pdf`);
-        alert("CAF Generated Successfully!");
+        // Generate Filename: CAF_Name_Date.pdf
+        const sanitizedName = formData.fullName.replace(/[^a-zA-Z0-9 ]/g, "").replace(/\s+/g, "_");
+        const sanitizedDate = formData.date.replace(/\//g, "-"); // 11/02/2026 -> 11-02-2026
+        const fileName = `CAF_${sanitizedName}_${sanitizedDate}.pdf`;
+
+        // Save locally
+        pdf.save(fileName);
+
+        // Upload to Google Drive (if configured)
+        const pdfBlob = pdf.output('blob');
+        await uploadToGoogleDrive(pdfBlob, fileName);
+
+        alert("CAF Generated & Downloaded Successfully!");
 
     } catch (err) {
         console.error(err);
@@ -518,3 +545,46 @@ document.getElementById('caf-form').addEventListener('submit', async function (e
         submitBtn.disabled = false;
     }
 });
+
+// Configuration: User must replace this URL after deploying the script
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwWezJbIwQygfuG7p_tWgeB9bP99SRrl6LWMFlk7dpY9_PEre0pwqcQnRHtecXgOf4f/exec";
+
+async function uploadToGoogleDrive(blob, fileName) {
+    if (GOOGLE_SCRIPT_URL === "YOUR_GOOGLE_SCRIPT_WEB_APP_URL_HERE") {
+        console.warn("Google Drive upload skipped: Script URL not configured.");
+        return; // Skip if not configured
+    }
+
+    const reader = new FileReader();
+    reader.readAsDataURL(blob);
+
+    return new Promise((resolve, reject) => {
+        reader.onloadend = async function () {
+            const base64Data = reader.result.split(',')[1];
+
+            try {
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors', // 'no-cors' is required for Google Apps Script simple triggers
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        fileData: base64Data,
+                        fileName: fileName,
+                        mimeType: 'application/pdf'
+                    })
+                });
+
+                // Note: with 'no-cors', we can't read the response status, 
+                // but if it doesn't throw network error, it likely worked.
+                console.log("Upload request sent to Google Drive.");
+                resolve();
+            } catch (e) {
+                console.error("Upload failed", e);
+                alert("Failed to upload to Google Drive: " + e.message);
+                resolve(); // Don't block the UI
+            }
+        };
+    });
+}
