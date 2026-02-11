@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uzaina Business India Pvt Ltd - Customer Application Form</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- html2canvas and jspdf -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+
+    <header>
+        <div class="container header-content">
+            <div class="logo-area">
+                <!-- Placeholder for Logo -->
+                 <div class="logo-placeholder">
+                    <i class="fa-solid fa-network-wired"></i>
+                    <span>DIGITEL</span>
+                 </div>
+                <div class="company-name">
+                    <h1>Uzaina Business India Pvt Ltd</h1>
+                    <p>Internet Service Provider Application Form</p>
+                </div>
+            </div>
+            <div class="meta-info">
+                <div class="info-item">
+                    <span class="label">Date:</span>
+                    <span id="current-date">--/--/----</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Time:</span>
+                    <span id="current-time">--:-- --</span>
+                </div>
+                 <div class="info-item highlight">
+                    <span class="label">Customer ID:</span>
+                    <span id="customer-id">UBI------</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <form id="caf-form">
+            <!-- Section 1: Customer Details -->
+            <section class="form-section">
+                <h2 class="section-title"><i class="fa-solid fa-user"></i> Customer Details</h2>
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label for="fullName">Full Name</label>
+                        <input type="text" id="fullName" name="fullName" required placeholder="Enter full name">
+                    </div>
+                    <div class="form-group">
+                        <label for="relativeName">Father / Husband Name</label>
+                        <input type="text" id="relativeName" name="relativeName" required placeholder="Enter name">
+                    </div>
+                    <div class="form-group">
+                        <label for="mobile">Mobile Number</label>
+                        <input type="tel" id="mobile" name="mobile" required pattern="[0-9]{10}" placeholder="10-digit mobile number">
+                    </div>
+                    <div class="form-group">
+                        <label for="altMobile">Alternate Number</label>
+                        <input type="tel" id="altMobile" name="altMobile" pattern="[0-9]{10}" placeholder="Optional">
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required placeholder="email@example.com">
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="installAddress">Installation Address</label>
+                        <textarea id="installAddress" name="installAddress" rows="3" required placeholder="Complete installation address"></textarea>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="permAddress">Permanent Address</label>
+                        <div class="checkbox-wrapper">
+                             <input type="checkbox" id="sameAddress"> <label for="sameAddress" class="inline-label">Same as Installation Address</label>
+                        </div>
+                        <textarea id="permAddress" name="permAddress" rows="3" required placeholder="Permanent address"></textarea>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: Documents & Photos -->
+            <section class="form-section">
+                <h2 class="section-title"><i class="fa-solid fa-camera"></i> Documents & Photos</h2>
+                
+                <div class="camera-grid">
+                    <!-- Customer Photo -->
+                    <div class="media-capture">
+                        <h3>Customer Photo</h3>
+                        <div class="preview-area" id="photo-preview">
+                            <i class="fa-solid fa-user-plus placeholder-icon"></i>
+                            <video id="photo-video" autoplay playsinline class="hidden"></video>
+                            <canvas id="photo-canvas" class="hidden"></canvas>
+                            <img id="photo-output" class="hidden" alt="Customer Photo">
+                        </div>
+                        <div class="controls">
+                            <button type="button" class="btn btn-secondary" onclick="startCamera('photo')"><i class="fa-solid fa-camera"></i> Start Camera</button>
+                            <button type="button" class="btn btn-primary hidden" id="snap-photo" onclick="capturePhoto('photo')"><i class="fa-solid fa-camera-retro"></i> Capture</button>
+                            <button type="button" class="btn btn-danger hidden" id="retake-photo" onclick="retakePhoto('photo')"><i class="fa-solid fa-rotate-left"></i> Retake</button>
+                        </div>
+                    </div>
+
+                    <!-- ID Proof -->
+                    <div class="media-capture">
+                        <h3>ID Proof (Aadhar/PAN/Voter)</h3>
+                         <div class="preview-area" id="id-preview">
+                            <i class="fa-solid fa-id-card placeholder-icon"></i>
+                            <video id="id-video" autoplay playsinline class="hidden"></video>
+                            <canvas id="id-canvas" class="hidden"></canvas>
+                             <img id="id-output" class="hidden" alt="ID Proof">
+                        </div>
+                        <div class="controls">
+                            <button type="button" class="btn btn-secondary" onclick="startCamera('id')"><i class="fa-solid fa-camera"></i> Camera</button>
+                             <label class="btn btn-outline file-upload-btn">
+                                <i class="fa-solid fa-upload"></i> Upload
+                                <input type="file" id="id-upload" accept="image/*" onchange="handleFileUpload(this, 'id')">
+                            </label>
+                            <button type="button" class="btn btn-primary hidden" id="snap-id" onclick="capturePhoto('id')">Capture</button>
+                             <button type="button" class="btn btn-danger hidden" id="retake-id" onclick="retakePhoto('id')">Retake</button>
+                        </div>
+                    </div>
+
+                    <!-- Address Proof -->
+                     <div class="media-capture">
+                        <h3>Address Proof</h3>
+                         <div class="preview-area" id="address-preview">
+                            <i class="fa-solid fa-map-location-dot placeholder-icon"></i>
+                             <video id="address-video" autoplay playsinline class="hidden"></video>
+                            <canvas id="address-canvas" class="hidden"></canvas>
+                             <img id="address-output" class="hidden" alt="Address Proof">
+                        </div>
+                        <div class="controls">
+                            <button type="button" class="btn btn-secondary" onclick="startCamera('address')"><i class="fa-solid fa-camera"></i> Camera</button>
+                             <label class="btn btn-outline file-upload-btn">
+                                <i class="fa-solid fa-upload"></i> Upload
+                                <input type="file" id="address-upload" accept="image/*" onchange="handleFileUpload(this, 'address')">
+                            </label>
+                             <button type="button" class="btn btn-primary hidden" id="snap-address" onclick="capturePhoto('address')">Capture</button>
+                             <button type="button" class="btn btn-danger hidden" id="retake-address" onclick="retakePhoto('address')">Retake</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+             <!-- Section 3: Plan & Payment -->
+             <section class="form-section">
+                <h2 class="section-title"><i class="fa-solid fa-file-invoice-dollar"></i> Plan Benefit & Billing</h2>
+                <div class="grid-2">
+                     <div class="form-group">
+                        <label for="planName">Selected Internet Plan</label>
+                        <select id="planName" name="planName" required>
+                            <option value="">-- Select Plan --</option>
+                            <option value="Bronze Plan - 50 Mbps">Bronze Plan - 50 Mbps</option>
+                            <option value="Silver Plan - 100 Mbps">Silver Plan - 100 Mbps</option>
+                            <option value="Gold Plan - 200 Mbps">Gold Plan - 200 Mbps</option>
+                            <option value="Platinum Plan - 500 Mbps">Platinum Plan - 500 Mbps</option>
+                            <option value="Enterprise - 1 Gbps">Enterprise - 1 Gbps</option>
+                        </select>
+                    </div>
+                     <div class="form-group">
+                        <label for="baseAmount">Monthly Amount (₹)</label>
+                        <input type="number" id="baseAmount" name="baseAmount" required min="0" placeholder="Enter Amount">
+                    </div>
+                     <div class="form-group">
+                        <label for="gstAmount">GST (18%)</label>
+                        <input type="text" id="gstAmount" name="gstAmount" readonly class="readonly-input">
+                    </div>
+                     <div class="form-group">
+                        <label for="totalAmount">Total Amount Payable</label>
+                        <input type="text" id="totalAmount" name="totalAmount" readonly class="readonly-input highlight-input">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: Signature & Declaration -->
+             <section class="form-section">
+                <h2 class="section-title"><i class="fa-solid fa-pen-nib"></i> Declaration & Signature</h2>
+                
+                <div class="signature-area">
+                    <p>I hereby declare that the information provided above is true to the best of my knowledge.</p>
+                    <div class="canvas-wrapper">
+                        <canvas id="signature-pad"></canvas>
+                        <div class="signature-line">Customer Signature</div>
+                    </div>
+                    <button type="button" class="btn btn-small btn-outline" onclick="clearSignature()">Clear Signature</button>
+                </div>
+
+                <div class="terms-wrapper">
+                    <input type="checkbox" id="terms" required>
+                    <label for="terms">I agree to the <a href="#">Terms & Conditions</a> of Uzaina Business India Pvt Ltd.</label>
+                </div>
+            </section>
+
+            <!-- Actions -->
+            <div class="form-actions">
+                <button type="button" class="btn btn-primary btn-large" onclick="sendOTP()" id="verify-btn">Verify & Verify Details</button>
+                <button type="submit" class="btn btn-success btn-large hidden" id="submit-btn">Submit & Generate PDF</button>
+            </div>
+        </form>
+    </main>
+
+    <!-- OTP Modal -->
+    <div id="otp-modal" class="modal hidden">
+        <div class="modal-content">
+            <h3>Enter OTP</h3>
+            <p>A One-Time Password has been sent to your mobile number.</p>
+            <input type="text" id="otp-input" placeholder="Enter 4-digit OTP" maxlength="4">
+            <div class="modal-actions">
+                <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="verifyOTP()">Verify</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden PDF Container (for generating clean PDF) -->
+    <div id="pdf-container" style="position: absolute; left: -9999px; top: 0; width: 210mm; background: white; padding: 20px;">
+        <!-- Content will be cloned here for PDF generation -->
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
