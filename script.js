@@ -472,17 +472,23 @@ document.getElementById('caf-form').addEventListener('submit', async function (e
         const lineHeight = 3.5;
 
         const termsText = [
-            "Uzaina Business India Pvt. Ltd. (hereinafter referred to as 'Uzaina Business India') provides internet services to the End User ('Subscriber') subject to the following terms and conditions. By activating the Service, the Subscriber agrees to be bound by these terms.",
-            "1. TERMS AND CONDITIONS: The terms detailed here replace any prior agreements. Any additional terms on specific documents issued by Uzaina Business India are incorporated by reference.",
-            "2. SERVICES: The Service is provided on an 'as is' and 'as available' basis. Uzaina Business India does not guarantee uninterrupted or error-free service. The speed of the internet may vary depending on network congestion, technical reasons, or other factors beyond control.",
-            "3. CHARGES AND PAYMENT: All invoices are due upon receipt. Subscriber agrees to pay the monthly service charges, installation fees, and applicable taxes. Late payments may attract a penalty of 1.5% per month. Service may be suspended for non-payment.",
-            "4. USE OF SERVICE: The Subscriber shall not use the Service for any illegal, prohibited, or unlawful activities, including but not limited to spamming, hacking, or copyright infringement. The Subscriber is solely responsible for all activity taken under their account.",
-            "5. EQUIPMENT: Any Customer Premise Equipment (CPE) provided by Uzaina Business India remains the property of the company unless purchased by the Subscriber. The Subscriber must return the equipment in good working condition upon termination of service.",
-            "6. TERMINATION: Uzaina Business India reserves the right to terminate the service at any time without notice if the Subscriber violates any terms. The Subscriber may terminate the service by providing 30 days' written notice.",
-            "7. INDEMNIFICATION: The Subscriber agrees to indemnify and hold harmless Uzaina Business India from any claims, damages, or losses arising out of the Subscriber's use of the Service.",
-            "8. LIMITATION OF LIABILITY: In no event shall Uzaina Business India be liable for any indirect, incidental, or consequential damages resulting from the use or inability to use the Service.",
-            "9. FORCE MAJEURE: Uzaina Business India shall not be liable for any failure or delay in performance due to causes beyond its reasonable control, including but not limited to acts of God, war, strikes, or network failures.",
-            "10. JURISDICTION: This agreement shall be governed by the laws of India, and any disputes shall be subject to the exclusive jurisdiction of the courts in the applicable service area."
+            "Uzaina Business India Pvt Ltd – DIGITEL Broadband Services",
+            "1. The customer agrees to use DIGITEL broadband services only for lawful purposes and in compliance with Government of India regulations.",
+            "2. The connection is provided for the registered address only and cannot be shifted without written request and approval.",
+            "3. Monthly rental charges must be paid in advance before the due date. Delay in payment may result in suspension or disconnection of services.",
+            "4. Installation charges, security deposit, and device charges (if any) are non-refundable unless otherwise specified in writing.",
+            "5. In case of non-payment beyond 15 days of due date, DIGITEL reserves the right to terminate the connection without prior notice.",
+            "6. The customer is responsible for safety and proper usage of ONU/Router and other equipment provided by DIGITEL.",
+            "7. Any physical damage to company equipment will be charged to the customer.",
+            "8. Speed may vary depending on network conditions, technical limitations, and external factors.",
+            "9. DIGITEL shall not be responsible for service interruptions due to power failure, fiber cut, natural disasters, or technical issues beyond control.",
+            "10. Shifting of connection is subject to feasibility and may attract shifting charges.",
+            "11. Refund of security deposit (if applicable) will be processed after return of company equipment in good condition.",
+            "12. The customer agrees to allow authorized company representatives for maintenance or inspection if required.",
+            "13. The connection cannot be resold or shared commercially without written permission.",
+            "14. Customer KYC documents must be genuine. Providing false documents may lead to legal action and immediate termination.",
+            "15. All disputes shall be subject to jurisdiction of local courts.",
+            "16. The customer confirms that all information provided in this CAF is true and correct."
         ];
 
         termsText.forEach(paragraph => {
