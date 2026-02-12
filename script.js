@@ -325,18 +325,30 @@ document.getElementById('caf-form').addEventListener('submit', async function (e
         // 2. Build PDF Layout HTML
         const pdfContainer = document.getElementById('pdf-container');
         pdfContainer.innerHTML = `
-            <div class="pdf-header">
-                <div class="pdf-logo">
-                    <div style="font-size: 24px; color: #2563eb; font-weight: bold;">DIGITEL</div>
-                    <div style="font-size: 10px; color: #64748b;">Uzaina Business India Pvt Ltd</div>
+            <div class="pdf-header" style="border-bottom: 2px solid #2563eb; padding-bottom: 10px; margin-bottom: 20px;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div class="pdf-logo" style="width: 100px;">
+                        <img src="assets/logo.png" alt="Logo" style="width: 100%; max-height: 80px; object-fit: contain;">
+                    </div>
+                    <div class="pdf-company-details" style="text-align: center; flex: 1;">
+                        <h1 style="color: #1e293b; font-size: 22px; margin: 0; text-transform: uppercase;">Uzaina Business India Pvt. Ltd.</h1>
+                        <p style="margin: 5px 0 0; color: #475569; font-size: 10px;">
+                            H.no:-41/40, Piller No BS/13, Sailaini chauraha old city bareilly, Pin code :- 243005
+                        </p>
+                        <p style="margin: 2px 0 0; color: #475569; font-size: 10px;">
+                            <strong>Email:</strong> uzbinternet@gmaiil.com | <strong>Website:</strong> www.uzbinternet.com
+                        </p>
+                        <p style="margin: 2px 0 0; color: #475569; font-size: 10px;">
+                            <strong>Mobile:</strong> 9027950075 | <strong>GSTIN:</strong> 09AABCU9685R1Z3
+                        </p>
+                    </div>
+                     <div class="pdf-meta" style="text-align: right; font-size: 11px; min-width: 100px;">
+                        <div><strong>CAF No:</strong> ${formData.customerId}</div>
+                        <div><strong>Date:</strong> ${formData.date}</div>
+                    </div>
                 </div>
-                <div class="pdf-title">
-                    <h1 style="color: #1e293b; font-size: 24px; margin: 0;">CUSTOMER APPLICATION FORM</h1>
-                    <p style="margin: 5px 0 0; color: #64748b; font-size: 12px;">Internet Service Provider Agreement</p>
-                </div>
-                <div class="pdf-meta" style="text-align: right; font-size: 12px;">
-                    <div><strong>CAF No:</strong> ${formData.customerId}</div>
-                    <div><strong>Date:</strong> ${formData.date}</div>
+                <div style="text-align: center; margin-top: 10px;">
+                     <h2 style="font-size: 16px; margin: 0; color: #2563eb; letter-spacing: 1px;">CUSTOMER APPLICATION FORM</h2>
                 </div>
             </div>
 
