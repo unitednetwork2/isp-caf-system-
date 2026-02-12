@@ -47,9 +47,24 @@ function calculateTotal() {
    3. Camera & File Handling
    =========================== */
 const streams = {}; // Store media streams to stop them later
+const cameraModes = {
+    'photo': 'user',
+    'id': 'environment',
+    'address': 'environment'
+};
 
-async function startCamera(type) {
+async function startCamera(type, mode = null) {
     try {
+        // Stop existing stream if any
+        if (streams[type]) {
+            streams[type].getTracks().forEach(track => track.stop());
+        }
+
+        // Update mode if provided
+        if (mode) {
+            cameraModes[type] = mode;
+        }
+
         const video = document.getElementById(`${type}-video`);
         const previewArea = document.getElementById(`${type}-preview`);
 
@@ -61,14 +76,29 @@ async function startCamera(type) {
 
         // Show buttons
         document.getElementById(`snap-${type}`).classList.remove('hidden');
+        document.getElementById(`switch-${type}`).classList.remove('hidden');
+        document.getElementById(`retake-${type}`).classList.add('hidden'); // Ensure retake is hidden
 
-        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        const constraints = {
+            video: {
+                facingMode: cameraModes[type]
+            }
+        };
+
+        const stream = await navigator.mediaDevices.getUserMedia(constraints);
         video.srcObject = stream;
         streams[type] = stream;
 
     } catch (err) {
+        console.error(err);
         alert("Could not access camera: " + err.message);
     }
+}
+
+function switchCamera(type) {
+    const currentMode = cameraModes[type];
+    const newMode = currentMode === 'user' ? 'environment' : 'user';
+    startCamera(type, newMode);
 }
 
 function capturePhoto(type) {
@@ -82,6 +112,13 @@ function capturePhoto(type) {
 
     // Draw video frame to canvas
     const ctx = canvas.getContext('2d');
+
+    // Mirror image if using front camera (user mode) - optional but good UX
+    if (cameraModes[type] === 'user') {
+        ctx.translate(canvas.width, 0);
+        ctx.scale(-1, 1);
+    }
+
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
     // Stop video stream
@@ -97,15 +134,17 @@ function capturePhoto(type) {
 
     // Toggle buttons
     document.getElementById(`snap-${type}`).classList.add('hidden');
+    document.getElementById(`switch-${type}`).classList.add('hidden');
     document.getElementById(`retake-${type}`).classList.remove('hidden');
 }
 
 function retakePhoto(type) {
     startCamera(type);
-    document.getElementById(`retake-${type}`).classList.add('hidden');
+    // Buttons handled in startCamera
 }
 
 function handleFileUpload(input, type) {
+    // ... (rest remains same)
     if (input.files && input.files[0]) {
         const reader = new FileReader();
         reader.onload = function (e) {

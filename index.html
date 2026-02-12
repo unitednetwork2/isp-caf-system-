@@ -113,6 +113,8 @@
                             <button type="button" class="btn btn-primary hidden" id="snap-photo"
                                 onclick="capturePhoto('photo')"><i class="fa-solid fa-camera-retro"></i>
                                 Capture</button>
+                            <button type="button" class="btn btn-warning hidden" id="switch-photo"
+                                onclick="switchCamera('photo')"><i class="fa-solid fa-repeat"></i> Switch</button>
                             <button type="button" class="btn btn-danger hidden" id="retake-photo"
                                 onclick="retakePhoto('photo')"><i class="fa-solid fa-rotate-left"></i> Retake</button>
                         </div>
@@ -137,6 +139,8 @@
                             </label>
                             <button type="button" class="btn btn-primary hidden" id="snap-id"
                                 onclick="capturePhoto('id')">Capture</button>
+                            <button type="button" class="btn btn-warning hidden" id="switch-id"
+                                onclick="switchCamera('id')"><i class="fa-solid fa-repeat"></i> Switch</button>
                             <button type="button" class="btn btn-danger hidden" id="retake-id"
                                 onclick="retakePhoto('id')">Retake</button>
                         </div>
@@ -159,6 +163,8 @@
                                 <input type="file" id="address-upload" accept="image/*"
                                     onchange="handleFileUpload(this, 'address')">
                             </label>
+                            <button type="button" class="btn btn-warning hidden" id="switch-address"
+                                onclick="switchCamera('address')"><i class="fa-solid fa-repeat"></i> Switch</button>
                             <button type="button" class="btn btn-primary hidden" id="snap-address"
                                 onclick="capturePhoto('address')">Capture</button>
                             <button type="button" class="btn btn-danger hidden" id="retake-address"
