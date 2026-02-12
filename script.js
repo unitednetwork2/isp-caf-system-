@@ -539,19 +539,31 @@ document.getElementById('caf-form').addEventListener('submit', async function (e
         const sanitizedName = formData.fullName.replace(/[^a-zA-Z0-9 ]/g, "").replace(/\s+/g, "_");
         const sanitizedDate = formData.date.replace(/\//g, "-"); // 11/02/2026 -> 11-02-2026
         const fileName = `CAF_${sanitizedName}_${sanitizedDate}.pdf`;
-
         // Save locally
-        pdf.save(fileName);
+        try {
+            pdf.save(fileName);
+        } catch (e) {
+            console.error("Local save failed", e);
+        }
 
-        // Upload to Google Drive (if configured)
+        // Upload to Google Drive
+        submitBtn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up fa-spin"></i> Uploading to Drive...';
+
         const pdfBlob = pdf.output('blob');
-        await uploadToGoogleDrive(pdfBlob, fileName);
+
+        // Add timeout to the upload process (e.g., 30 seconds)
+        const uploadPromise = uploadToGoogleDrive(pdfBlob, fileName);
+        const timeoutPromise = new Promise((_, reject) =>
+            setTimeout(() => reject(new Error("Upload timed out (30s)")), 30000)
+        );
+
+        await Promise.race([uploadPromise, timeoutPromise]);
 
         alert("CAF Generated & Downloaded Successfully!");
 
     } catch (err) {
         console.error(err);
-        alert("Error generating PDF: " + err.message);
+        alert("Error: " + err.message);
     } finally {
         submitBtn.innerHTML = originalText;
         submitBtn.disabled = false;
@@ -559,7 +571,7 @@ document.getElementById('caf-form').addEventListener('submit', async function (e
 });
 
 // Configuration: User must replace this URL after deploying the script
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwWezJbIwQygfuG7p_tWgeB9bP99SRrl6LWMFlk7dpY9_PEre0pwqcQnRHtecXgOf4f/exec";
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx6i-1ozUMHuQIwCryEgiDjKhzH4Rgx1_Gv-B9eLjcQZAJJmT3fUQKkJJJgLh6W0NRt/exec";
 
 async function uploadToGoogleDrive(blob, fileName) {
     if (GOOGLE_SCRIPT_URL === "YOUR_GOOGLE_SCRIPT_WEB_APP_URL_HERE") {

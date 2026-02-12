@@ -25,3 +25,17 @@
 5.  Save the file.
 
 Done! Your form will now save PDFs to a Google Drive folder named "Uzaina Business India - Customer Data".
+
+## Troubleshooting (Important!)
+**If the file is not appearing in Drive:**
+
+1.  **Check Permissions**: Go back to `script.google.com`, click **Deploy -> Manage deployments -> Edit**.
+    *   Ensure **Who has access** is set to **"Anyone"**. This is critical.
+    *   If it was "Only myself", change it to "Anyone" and re-deploy.
+
+2.  **Check Code**: Did you paste the code from `google_apps_script.js` into the `Code.gs` file before deploying?
+    *   Sometimes users deploy an empty script by mistake.
+    *   Open your script, paste the code again, save, and deploy as a **New Version**.
+
+3.  **Check Internet**: Ensure you have a stable internet connection.
+
