@@ -365,20 +365,18 @@ document.getElementById('caf-form').addEventListener('submit', async function (e
         const pdfContainer = document.getElementById('pdf-container');
         pdfContainer.innerHTML = `
             <div class="pdf-header" style="border-bottom: 2px solid #2563eb; padding-bottom: 10px; margin-bottom: 20px;">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
                     <div class="pdf-logo" style="width: 100px;">
-                        <img src="assets/logo.png" alt="Logo" style="width: 100%; max-height: 80px; object-fit: contain;">
+                        <!-- Logo with Error Handling -->
+                        <img src="assets/logo.png" alt="Logo" style="width: 100%; max-height: 80px; object-fit: contain;" onerror="this.style.display='none'">
                     </div>
                     <div class="pdf-company-details" style="text-align: center; flex: 1;">
-                        <h1 style="color: #1e293b; font-size: 22px; margin: 0; text-transform: uppercase;">Uzaina Business India Pvt. Ltd.</h1>
-                        <p style="margin: 5px 0 0; color: #475569; font-size: 10px;">
-                            H.NO. 41/40, Pillar No. BS/13F, Sailani Chauraha, Bareilly
-                        </p>
-                        <p style="margin: 2px 0 0; color: #475569; font-size: 10px;">
-                            <strong>PAN:</strong> AABCU9685R | <strong>GSTIN:</strong> 09AABCU9685R1Z3
-                        </p>
-                        <p style="margin: 2px 0 0; color: #475569; font-size: 10px;">
-                            <strong>Tel:</strong> 9719111102 | <strong>Email:</strong> azeemmian11@gmail.com
+                        <h1 style="color: #1e293b; font-size: 20px; margin: 0; text-transform: uppercase; font-weight: bold;">Uzaina Business India Pvt. Ltd.</h1>
+                        <p style="margin: 5px 0 0; color: #475569; font-size: 10px; line-height: 1.4;">
+                            H,NO. 41/40, Pillar No. BS/13F, Sailani Chauraha, Bareilly<br>
+                            <strong>PAN :</strong> AABCU9685R<br>
+                            <strong>GSTIN :</strong> 09AABCU9685R1Z3<br>
+                            <strong>Tel. :</strong> 9719111102 &nbsp;&nbsp; <strong>email :</strong> azeemmian11@gmail.com
                         </p>
                     </div>
                      <div class="pdf-meta" style="text-align: right; font-size: 11px; min-width: 100px;">
