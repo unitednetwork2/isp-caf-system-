@@ -372,13 +372,13 @@ document.getElementById('caf-form').addEventListener('submit', async function (e
                     <div class="pdf-company-details" style="text-align: center; flex: 1;">
                         <h1 style="color: #1e293b; font-size: 22px; margin: 0; text-transform: uppercase;">Uzaina Business India Pvt. Ltd.</h1>
                         <p style="margin: 5px 0 0; color: #475569; font-size: 10px;">
-                            H.no:-41/40, Piller No BS/13, Sailaini chauraha old city bareilly, Pin code :- 243005
+                            H.NO. 41/40, Pillar No. BS/13F, Sailani Chauraha, Bareilly
                         </p>
                         <p style="margin: 2px 0 0; color: #475569; font-size: 10px;">
-                            <strong>Email:</strong> uzbinternet@gmaiil.com | <strong>Website:</strong> www.uzbinternet.com
+                            <strong>PAN:</strong> AABCU9685R | <strong>GSTIN:</strong> 09AABCU9685R1Z3
                         </p>
                         <p style="margin: 2px 0 0; color: #475569; font-size: 10px;">
-                            <strong>Mobile:</strong> 9027950075 | <strong>GSTIN:</strong> 09AABCU9685R1Z3
+                            <strong>Tel:</strong> 9719111102 | <strong>Email:</strong> azeemmian11@gmail.com
                         </p>
                     </div>
                      <div class="pdf-meta" style="text-align: right; font-size: 11px; min-width: 100px;">
